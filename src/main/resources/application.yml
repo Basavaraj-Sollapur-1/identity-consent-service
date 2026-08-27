@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:55432/echolife_identity}
+    username: ${DB_USERNAME:echolife}
+    password: ${DB_PASSWORD:echo@123}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+
+server:
+  port: ${SERVER_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+echolife:
+  jwt:
+    private-key-path: ${ECHOLIFE_PRIVATE_KEY_PATH:keys/private.pem}
+    public-key-path: ${ECHOLIFE_PUBLIC_KEY_PATH:keys/public.pem}
+    issuer: ${ECHOLIFE_JWT_ISSUER:http://identity-consent-service}
+    access-token-ttl-seconds: ${ECHOLIFE_ACCESS_TOKEN_TTL_SECONDS:900}
+    mfa-challenge-ttl-seconds: ${ECHOLIFE_MFA_CHALLENGE_TTL_SECONDS:300}
+
+  mfa:
+    encryption-key: ${ECHO_MFA_ENCRYPTION_KEY}
+
+  internal:
+    service-key: ${ECHOLIFE_INTERNAL_SERVICE_KEY}
+
+  cors:
+    allowed-origins: ${ECHOLIFE_CORS_ALLOWED_ORIGINS:}
+
+  age:
+    minimum-session-age: ${ECHO_MIN_SESSION_AGE:13}
